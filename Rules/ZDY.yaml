@@ -1,7 +1,12 @@
-payload:
-  - DOMAIN-SUFFIX,cloudfront.net,DIRECT
-  - DOMAIN-SUFFIX,ttvnw.net,DIRECT
-  - DOMAIN-SUFFIX,surrit.com,DIRECT
-  - DOMAIN-SUFFIX,mushroomtrack.com,DIRECT
-  - DOMAIN-KEYWORD,wowstream,DIRECT
+rule-providers:
+  my_direct:
+    type: http
+    behavior: domain
+    url: https://raw.githubusercontent.com/Yux28/DDdd/refs/heads/main/Rules/CustomRules.yaml
+    interval: 86400
+
+rules:
+  - RULE-SET,my_direct,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,PROXY
   
