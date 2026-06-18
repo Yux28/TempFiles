@@ -1,0 +1,7 @@
+payload:
+  - DOMAIN-SUFFIX,cloudfront.net,DIRECT
+  - DOMAIN-SUFFIX,ttvnw.net,DIRECT
+  - DOMAIN-SUFFIX,surrit.com,DIRECT
+  - DOMAIN-SUFFIX,mushroomtrack.com,DIRECT
+  - DOMAIN-KEYWORD,wowstream,DIRECT
+  
