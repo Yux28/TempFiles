@@ -9,10 +9,10 @@ proxy-providers:
   #机场2: {<<: *p, url: "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml", override: {additional-prefix: "²"}}
   #机场3: {<<: *p, url: "https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml", override: {additional-prefix: "³"}}
 
-port: 7896
-socks-port: 7891
-redir-port: 7892
-tproxy-port: 7894
+#port: 7896
+#socks-port: 7891
+#redir-port: 7892
+#tproxy-port: 7894
 mixed-port: 7893  
 mode: rule
 log-level: warning
@@ -25,24 +25,24 @@ unified-delay: true
 tcp-concurrent: true
 inbound-tfo: true
 inbound-mptcp: false
-allow-lan: true
+allow-lan: false
 keep-alive-idle: 300
 keep-alive-interval: 30
 bind-address: "*"
-authentication: ["admin:88888888"]
+authentication: ["admin:20262026"]
 skip-auth-prefixes: ["127.0.0.1/8", "::1/128"]
 lan-allowed-ips: ["0.0.0.0/0", "::/0"]
 lan-disallowed-ips: []
 global-ua: "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Mobile Safari/537.36"
 profile: {store-selected: true, store-fake-ip: true}
-ntp: {enable: true, server: time.apple.com, port: 123, interval: 30, dialer-proxy: "", write-to-system: false}
+ntp: {enable: true, server: time.apple.com, port: 123, interval: 180, dialer-proxy: "", write-to-system: false}
 experimental: {quic-go-disable-ecn: true}
 
 external-controller-cors:
   allow-origins: ["*"]
   allow-private-network: true
 external-controller: 127.0.0.1:9092
-secret: "88888888"
+secret: "20262026"
 external-ui: './ui'
 external-ui-name: zashboard
 external-ui-url: "https://codeload.github.com/Zephyruso/zashboard/zip/refs/heads/gh-pages"
@@ -64,12 +64,12 @@ tun:
   udp-timeout: 60
   disable-icmp-forwarding: true
   route-exclude-address-set: [private-ip]
-  route-exclude-cidr: ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "100.64.0.0/10", "fc00::/7", "fe80::/10"]
+  #route-exclude-cidr: ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12", "100.64.0.0/10", "fc00::/7", "fe80::/10"]
 
 dns-anchor:
   cn-dns: &cn-dns ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"]
-  global-dns: &global-dns ["https://1.1.1.1/dns-query", "https://dns.google/dns-query", "https://dns.quad9.net/dns-query", "https://dns.cloudflare.com/dns-query", "tls://cloudflare-dns.com:853", "tls://dns.google:853", "https://dns.alidns.com/dns-query"]
-  #global-dns: &global-dns ["https://1.1.1.1/dns-query", "https://dns.google/dns-query", "https://dns.quad9.net/dns-query", "tls://cloudflare-dns.com:853", "tls://dns.google:853"]
+  #global-dns: &global-dns ["https://1.1.1.1/dns-query", "https://dns.google/dns-query", "https://dns.quad9.net/dns-query", "https://dns.cloudflare.com/dns-query", "tls://cloudflare-dns.com:853", "tls://dns.google:853", "https://dns.alidns.com/dns-query"]
+  global-dns: &global-dns ["https://1.1.1.1/dns-query", "https://dns.google/dns-query", "https://dns.quad9.net/dns-query", "tls://cloudflare-dns.com:853", "tls://dns.google:853"]
 
 dns:
   enable: true
@@ -85,22 +85,24 @@ dns:
   fake-ip-filter-mode: blacklist
   fake-ip-ttl: 60
   fake-ip-filter: ["localhost","+.lan","+.local","+.arpa","+.ntp.org","captive.apple.com","+.apple.com","+.itunes.apple.com","+.apps.apple.com","+.appstore.com","connectivitycheck.gstatic.com","msftconnecttest.com","msftncsi.com","openai.*","+.openai.*","report-v2.samsung.japps.cn","rule-set:private"]
-  direct-nameserver: ["system"]
+  direct-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
   default-nameserver:
     - 223.5.5.5
     - 119.29.29.29
   nameserver:
-    - https://dns.alidns.com/dns-query
-    - https://doh.pub/dns-query
-    - https://1.1.1.1/dns-query
-  # 解决直连访问 Apple 相关服务失败的问题，使用国内 DNS 解析
+    *cn-dns
+    #- https://dns.alidns.com/dns-query
+    #- https://doh.pub/dns-query
+    #- https://1.1.1.1/dns-query
   proxy-server-nameserver:
     - 223.5.5.5
     - 119.29.29.29
   direct-nameserver-follow-policy: true
   nameserver-policy:
     "rule-set:PersonalUseProxy": *global-dns
-    "rule-set:PersonalUseDirect": *global-dns
+    "rule-set:PersonalUseDirect": *cn-dns
     "rule-set:reject": ["https://dns.adguard.com/dns-query"]
     "rule-set:Google-zj": *global-dns
     "rule-set:OpenAI-zj": *global-dns
@@ -218,12 +220,12 @@ rules:
   - RULE-SET,icloud,🍎苹果服务
   - RULE-SET,Apple,🍎苹果服务
   - RULE-SET,twitter,🌍全球加速
-  - RULE-SET,cloudflare-ip,🌍全球加速,no-resolve
-  - RULE-SET,cloudfront-ip,🌍全球加速,no-resolve
-  - RULE-SET,fastly-ip,🌍全球加速,no-resolve
   - RULE-SET,greatfire,🌍全球加速
   - RULE-SET,gfw,🌍全球加速
   - RULE-SET,geolocation-!cn,🌍全球加速
+  - RULE-SET,cloudflare-ip,🌍全球加速,no-resolve
+  - RULE-SET,cloudfront-ip,🌍全球加速,no-resolve
+  - RULE-SET,fastly-ip,🌍全球加速,no-resolve
   - RULE-SET,games-cn,🎯直连
   - RULE-SET,bilibili,📺哔哩哔哩
   - RULE-SET,xiaohongshu,📕小红书
