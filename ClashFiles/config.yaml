@@ -171,7 +171,7 @@ geox-url:
 proxy-providers:
   airport:
     type: http
-    url: "你的机场订阅链接"                  # <--- 🔴 替换为你的机场订阅地址
+    url: "https://gh-proxy.com/https://raw.githubusercontent.com/peasoft/NoMoreWalls/master/list.meta.yml"                  # <--- 🔴 替换为你的机场订阅地址
     path: ./proxy-providers/airport.yaml     # 本地缓存路径
     interval: 86400                          # 每 24 小时更新一次
     health-check: *health-check              # 引用锚点：健康检查
